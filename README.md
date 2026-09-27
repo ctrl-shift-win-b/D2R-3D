@@ -29,4 +29,5 @@ Build output will be in `bazel-bin/standalone/dist/d2r-3d.{exe,dll}`.
 
 ## Plugin version
 
-`bazel build //standalone:dist`. No further documentation, sorry.
+`bazel build //plugin/...` creates the two plugins, one for the camera, one for the render distance.
+F12 enables both.
