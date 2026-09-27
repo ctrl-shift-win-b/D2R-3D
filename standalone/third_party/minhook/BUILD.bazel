@@ -1,0 +1,20 @@
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+
+cc_library(
+    name = "minhook",
+    srcs = [
+        "src/buffer.c",
+        "src/buffer.h",
+        "src/hde/hde64.c",
+        "src/hde/hde64.h",
+        "src/hde/pstdint.h",
+        "src/hde/table64.h",
+        "src/hook.c",
+        "src/trampoline.c",
+        "src/trampoline.h",
+    ],
+    hdrs = ["include/MinHook.h"],
+    includes = ["include"],
+    target_compatible_with = ["@platforms//os:windows"],
+    visibility = ["//standalone:__pkg__"],
+)

@@ -1,0 +1,42 @@
+load("@bazel_skylib//rules:copy_file.bzl", "copy_file")
+load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
+
+# bazel build //standalone:dist
+# Output: bazel-bin/standalone/dist/d2r-3d.exe + d2r-3d.dll -> copy both into the D2R folder.
+
+cc_binary(
+    name = "d2r-3d.dll",
+    srcs = ["d2r3d.cpp"],
+    copts = [
+        "/utf-8",
+        "/W3",
+        "/EHsc",
+        "/permissive-",
+    ],
+    linkopts = ["user32.lib"],
+    linkshared = True,
+    target_compatible_with = ["@platforms//os:windows"],
+    deps = ["//standalone/third_party/minhook"],
+)
+
+copy_file(
+    name = "dist_exe",
+    src = "//standalone/launcher:d2r-3d",
+    out = "dist/d2r-3d.exe",
+    allow_symlink = False,
+)
+
+copy_file(
+    name = "dist_dll",
+    src = ":d2r-3d.dll",
+    out = "dist/d2r-3d.dll",
+    allow_symlink = False,
+)
+
+filegroup(
+    name = "dist",
+    srcs = [
+        ":dist_dll",
+        ":dist_exe",
+    ],
+)

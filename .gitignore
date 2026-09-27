@@ -1,0 +1,7 @@
+/bazel-*
+
+# Full-size screenshots; the README uses the .jpg versions.
+/img/*.png
+
+# The enclosing repository ignores *.txt; the vendored licenses must be committed.
+!*.txt

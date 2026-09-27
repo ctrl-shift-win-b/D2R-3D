@@ -1,0 +1,29 @@
+load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
+load("//tools:windows_resource.bzl", "windows_resource")
+
+windows_resource(
+    name = "plugin_manifest",
+    src = "plugin.rc",
+    deps = ["//plugin/third_party/sdk:sdk"],
+)
+
+[cc_binary(
+    name = "d2rl-%s.dll" % plugin,
+    srcs = ["%s.cpp" % plugin],
+    copts = [
+        "/utf-8",
+        "/W3",
+        "/EHsc",
+        "/permissive-",
+    ],
+    linkopts = ["user32.lib"],
+    linkshared = True,
+    target_compatible_with = ["@platforms//os:windows"],
+    deps = [
+        ":plugin_manifest",
+        "//plugin/third_party/sdk:sdk",
+    ],
+) for plugin in [
+    "3dcam",
+    "renderdistance",
+]]
