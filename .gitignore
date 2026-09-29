@@ -1,7 +1,15 @@
 /bazel-*
+/.venv/
+__pycache__/
+*.py[cod]
+.vs/
+*.user
 
 # Full-size screenshots; the README uses the .jpg versions.
 /img/*.png
 
 # The enclosing repository ignores *.txt; the vendored licenses must be committed.
 !*.txt
+
+# Local live-game scan log. Contains process ids from one machine, not source.
+/vr/spike_result.txt

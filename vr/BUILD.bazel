@@ -1,0 +1,58 @@
+load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+load("@rules_cc//cc:cc_test.bzl", "cc_test")
+
+cc_library(
+    name = "eye_math",
+    srcs = ["eye_math.cc"],
+    hdrs = ["eye_math.h"],
+    copts = [
+        "/utf-8",
+        "/W3",
+        "/EHsc",
+        "/permissive-",
+    ],
+)
+
+cc_test(
+    name = "eye_math_test",
+    srcs = ["eye_math_test.cc"],
+    copts = [
+        "/utf-8",
+        "/W3",
+        "/EHsc",
+        "/permissive-",
+    ],
+    deps = [":eye_math"],
+)
+
+cc_binary(
+    name = "preview",
+    srcs = ["preview.cc"],
+    copts = [
+        "/utf-8",
+        "/W3",
+        "/EHsc",
+        "/permissive-",
+    ],
+    deps = [":eye_math"],
+)
+
+cc_library(
+    name = "openxr_headers",
+    hdrs = glob(["third_party/openxr/include/openxr/*.h"]),
+    includes = ["third_party/openxr/include"],
+)
+
+cc_binary(
+    name = "openxr_probe",
+    srcs = ["openxr_probe.cc"],
+    copts = [
+        "/utf-8",
+        "/W3",
+        "/EHsc",
+        "/permissive-",
+    ],
+    target_compatible_with = ["@platforms//os:windows"],
+    deps = [":openxr_headers"],
+)
